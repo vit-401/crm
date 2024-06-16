@@ -1,0 +1,78 @@
+//@value colors: "/styles/admin/_colors.scss";
+
+//@value backgroundDark, textGray from colors;
+
+.root {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  background-color: #F4F9FD;
+}
+
+
+.wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  overflow: hidden;
+  padding-top: 64px;
+  height: 100vh;
+
+}
+
+.container {
+  padding: 0 26px 0 40px;
+  @media (max-width: 1336px) {
+    padding: 0 24px;
+  }
+
+  @media (max-width: 460px) {
+    padding: 0 12px;
+  }
+}
+
+.content_container {
+  display: flex;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1 1 auto;
+  height: 100%;
+  overflow: auto;
+}
+
+.page {
+  //background-color: backgroundDark;
+  min-height: 100%;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+
+.card_container {
+  padding-bottom: 80px;
+  padding-top: 80px;
+  max-width: 600px !important;
+}
+
+.card_content {
+  display: flex;
+  flex-direction: column;
+  padding: 30px !important;
+}
+
+.authorize_block {
+  font-size: 15px;
+  position: relative;
+  margin: 0px auto;
+
+  a {
+    //color: textGray;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
