@@ -32,7 +32,7 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-  backgroundColor: '#75b3e6',
+  // backgroundColor: '#75b3e6',
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));

@@ -6,10 +6,10 @@
 
 .nav_profile {
   align-items: center;
-  //background: #7D8592;
+
   border-radius: 10px;
-  display: flex;
   overflow: hidden;
+  display: flex;
   //padding: 16px;
   //margin: 14px;
   position: relative;
@@ -138,10 +138,12 @@ div.mobile_drawer {
   top: 64px;
   height: calc(100% - 64px);
 }
-
+.profile_content{
+  background-color: #F4F9FD;
+  padding-top: 35px;
+}
 div.desktop_drawerSideBar {
   margin: 20px;
-  border-radius: 24px;
   //margin-top: 64px;
   background-color: #fff;
   //overflow-y: scroll;
@@ -167,9 +169,10 @@ div.desktop_drawerSideBar {
 
 button.drawerSideBarButton {
   height: 100%;
-  color: #fff;
+  color: #3F8CFF;
   //background-color: #274470;
   text-transform: inherit;
+
 
   &.active {
     background-color: rgba(255, 255, 255, 0.1);
@@ -177,10 +180,10 @@ button.drawerSideBarButton {
 }
 
 span.drawerTitleBtn {
-  color: #fff;
+  color: #3F8CFF;
   margin-left: 30px;
   margin-right: 30px;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 15px;
   line-height: 18px;
 }
