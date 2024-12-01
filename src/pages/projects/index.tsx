@@ -1,11 +1,10 @@
 import Private from "../../hoc/Privet";
 import LayoutAdmin from "../../layout";
 import {PERMISSIONS} from "../../utils/permitions";
+import ProjectsContent from "../../containers/Projects";
 
 
-const ProjectsContent = ()=>{
-  return <div>Projects</div>
-}
+
 
 const Content = Private(ProjectsContent, [PERMISSIONS.PROJECTS_READ]);
 const Projects = () => {

@@ -1,5 +1,5 @@
 import React, {ReactNode, useEffect, useLayoutEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -20,7 +20,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import {DrawerHeader, DrawerSideBar} from './components/DrawerSideBar';
 import NavItem from "./navItem";
-import {ADMIN_PATH} from "../../utils/paths";
+import {ADMIN_LOGIN, ADMIN_PATH} from "../../utils/paths";
 import {PERMISSIONS} from "../../utils/permitions";
 import {usePermissions} from "../../hooks/access/usePermissions";
 import LanguageIcon from '@mui/icons-material/Language';
@@ -110,8 +110,13 @@ const reduceChildRoutes = ({
 const NavBar = (props: NavBarProps) => {
     const {onMobileClose, openMobile} = props;
     const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate();
 
     const handleLogout = async (): Promise<void> => {
+        localStorage.removeItem('username');
+        localStorage.removeItem('password');
+
+        navigate(ADMIN_LOGIN)
     };
     const location = useLocation(); // Use the hook here
     const {hasPermission} = usePermissions()

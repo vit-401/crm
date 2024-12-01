@@ -1,11 +1,10 @@
 import Private from "../../hoc/Privet";
 import LayoutAdmin from "../../layout";
 import {PERMISSIONS} from "../../utils/permitions";
+import MessengerContent from "../../containers/Messenger";
 
 
-const MessengerContent = ()=>{
-  return <div>Messenger</div>
-}
+
 
 const Content = Private(MessengerContent, [PERMISSIONS.MESSENGER_READ]);
 const Messenger = () => {

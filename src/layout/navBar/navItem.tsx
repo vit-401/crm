@@ -59,7 +59,6 @@ const NavItem = (props: NavItemProps) => {
             </ListItem>
         );
     }
-    console.log(open)
     return (
         <ListItem className={`${styles.itemLeaf} ${className}`} disableGutters key={title} {...rest}>
             <Link to={href || '/'}>

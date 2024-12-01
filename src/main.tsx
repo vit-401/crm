@@ -1,5 +1,5 @@
 import {createBrowserRouter} from 'react-router-dom';
-import {ADMIN_PATH} from "./utils/paths";
+import {ADMIN_LOGIN, ADMIN_PATH} from "./utils/paths";
 import Dashboard from "./pages/dashboard";
 import Projects from "./pages/projects";
 import Calendar from "./pages/calendar";
@@ -7,6 +7,7 @@ import Vacations from "./pages/vacations";
 import Employees from "./pages/employees";
 import Messenger from "./pages/messenger";
 import InfoPortal from "./pages/info-portal";
+import SignIn from "./pages/sign-in";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
     {
         path: ADMIN_PATH.INFO_PORTAL, // Route for Info Portal
         element: <InfoPortal/>,
+    },
+    {
+        path: ADMIN_LOGIN,
+        element: <SignIn/>,
     },
 ]);
 
