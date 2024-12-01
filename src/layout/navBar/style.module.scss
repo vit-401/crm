@@ -1,7 +1,11 @@
 
-
-.navigation {
-
+.logo {
+  padding: 0 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  svg {
+    width: 100%;
+  }
 }
 
 .nav_profile {
@@ -60,6 +64,9 @@ li.itemLeaf {
   display: flex;
   padding-top: 0;
   padding-bottom: 0;
+  a{
+    width: 100%;
+  }
 }
 
 button.button {
@@ -94,8 +101,20 @@ a.buttonLeaf > button {
 }
 
 .buttonLeafActive {
-  //background-color: rgba(255, 255, 255, 0.1) !important;
-  border-radius: 0;
+  background-color: #F4F9FD !important;
+  border-radius: 10px;
+  position: relative;
+  &:after{
+    content: "";
+    display: block;
+    width: 4px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #3F8CFF;
+    
+  }
 }
 
 .icon {
@@ -138,10 +157,11 @@ div.mobile_drawer {
   top: 64px;
   height: calc(100% - 64px);
 }
-.profile_content{
-  background-color: #F4F9FD;
-  padding-top: 35px;
+
+.profile_content {
+  background-color: #ffffff;
 }
+
 div.desktop_drawerSideBar {
   margin: 20px;
   //margin-top: 64px;
@@ -213,6 +233,7 @@ hr.divider {
 }
 
 .listWrap {
+  padding-bottom: 40px;
   //height: 100%;
   //@media (max-height: 570px) {
   //  height: auto;

@@ -3,12 +3,12 @@ import LayoutAdmin from "../../layout";
 import {PERMISSIONS} from "../../utils/permitions";
 
 
-const Test = ()=>{
-  return <div>Dashboard</div>
+const VacationsContent = ()=>{
+  return <div>Vacations</div>
 }
 
-const Content = Private(Test, [PERMISSIONS.DASHBOARD_READ]);
-const Dashboard = () => {
+const Content = Private(VacationsContent, [PERMISSIONS.VACATIONS_READ]);
+const Vacations = () => {
   return (
     <LayoutAdmin>
       <Content/>
@@ -16,4 +16,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard
+export default Vacations;

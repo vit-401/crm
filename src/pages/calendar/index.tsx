@@ -3,12 +3,12 @@ import LayoutAdmin from "../../layout";
 import {PERMISSIONS} from "../../utils/permitions";
 
 
-const Test = ()=>{
-  return <div>Dashboard</div>
+const CalendarContent = ()=>{
+  return <div>Calendar</div>
 }
 
-const Content = Private(Test, [PERMISSIONS.DASHBOARD_READ]);
-const Dashboard = () => {
+const Content = Private(CalendarContent, [PERMISSIONS.CALENDAR_READ]);
+const Calendar = () => {
   return (
     <LayoutAdmin>
       <Content/>
@@ -16,4 +16,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard
+export default Calendar;

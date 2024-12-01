@@ -1,36 +1,110 @@
-import React from 'react';
-//@ts-ignore
+import React, {ReactNode, useEffect, useLayoutEffect} from 'react';
+import {useLocation} from 'react-router-dom';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import HomeWorkIcon from '@mui/icons-material/HomeWork';
-import PublicIcon from '@mui/icons-material/Public';
-import styles from './style.module.scss';
-import DevicesIcon from '@mui/icons-material/Devices';
-import FactCheckIcon from '@mui/icons-material/FactCheck';
-import PersonIcon from '@mui/icons-material/Person';
+import LayersIcon from '@mui/icons-material/Layers';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import GroupIcon from '@mui/icons-material/Group';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import GroupsIcon from '@mui/icons-material/Groups';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import styles from './style.module.scss';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-
-
+import Logo from "../../images/index.svg"
+import ForumIcon from '@mui/icons-material/Forum';
 import {Button, Drawer} from '@mui/material';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import {DrawerHeader, DrawerSideBar} from './components/DrawerSideBar';
-
+import NavItem from "./navItem";
+import {ADMIN_PATH} from "../../utils/paths";
+import {PERMISSIONS} from "../../utils/permitions";
+import {usePermissions} from "../../hooks/access/usePermissions";
+import LanguageIcon from '@mui/icons-material/Language';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import PublicIcon from '@mui/icons-material/Public';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 interface NavBarProps {
     onMobileClose: () => void;
     openMobile: boolean;
 }
+
+interface Item {
+    href: string;
+    icon?: any;
+    info?: ReactNode;
+    items?: Item[];
+    title: string;
+    permission: boolean;
+}
+
+interface Section {
+    items: Item[];
+    subheader: string;
+}
+
+type RenderNavItemsPropsType = {
+    items: Item[];
+    depth?: number;
+    isOpenNavBar: boolean;
+};
+const renderNavItems = ({
+                            items,
+                            depth = 0,
+                            isOpenNavBar,
+                            location,
+                        }: RenderNavItemsPropsType & { location: any }) => {
+    return (
+        <List disablePadding>
+            {items.reduce(
+                (acc: any[], item: Item) =>
+                    reduceChildRoutes({acc, item, depth, isOpenNavBar, location}),
+                [],
+            )}
+        </List>
+    );
+};
+
+
+const reduceChildRoutes = ({
+                               acc,
+                               item,
+                               depth,
+                               isOpenNavBar,
+                               location,
+                           }: {
+    acc: any[];
+    item: Item;
+    depth: number;
+    isOpenNavBar: boolean;
+    location: any;
+}) => {
+    const key = item.title + depth;
+
+    let open = false;
+    if (item.href !== '/admin' && location.pathname.indexOf(item.href.split('?')[0]) >= 0) open = true;
+    if (item.href === '/admin' && location.pathname === item.href.split('?')[0]) open = true;
+
+    item.permission &&
+    acc.push(
+        <NavItem
+            depth={depth}
+            href={item.href}
+            icon={item.icon}
+            info={item.info}
+            open={open}
+            key={key}
+            title={item.title}
+            isOpenNavBar={isOpenNavBar}
+        />,
+    );
+
+    return acc;
+};
 
 
 const NavBar = (props: NavBarProps) => {
@@ -39,103 +113,75 @@ const NavBar = (props: NavBarProps) => {
 
     const handleLogout = async (): Promise<void> => {
     };
-
+    const location = useLocation(); // Use the hook here
+    const {hasPermission} = usePermissions()
 
     const sections = [
         {
             subheader: '',
             items: [
                 {
-                    title: 'Customers',
-                    icon: GroupsIcon,
-                    // href: ADMIN_PATH.CUSTOMERS,
-                    // permission: hasPermission([PERMISSIONS.CUSTOMER_READ]),
+                    title: 'Dashboard',
+                    icon: DashboardIcon,
+                    href: ADMIN_PATH.DASHBOARD, // Replace with actual path
+                    permission: hasPermission([PERMISSIONS.DASHBOARD_READ]),
                 },
                 {
-                    title: 'Organizations',
-                    icon: HomeWorkIcon,
-                    // href: ADMIN_PATH.ORGANIZATION_PAGE,
-                    // permission: hasPermission([PERMISSIONS.ORGANIZATION_READ]),
+                    title: 'Projects',
+                    icon: LayersIcon,
+                    href: ADMIN_PATH.PROJECTS, // Replace with actual path
+                    permission: hasPermission([PERMISSIONS.PROJECTS_READ]),
                 },
                 {
-                    title: 'Locations',
-                    icon: PublicIcon,
-                    // href: ADMIN_PATH.LOCATION_PAGE,
-                    // permission: hasPermission([PERMISSIONS.LOCATION_READ]),
+                    title: 'Calendar',
+                    icon: EventNoteIcon,
+                    href: ADMIN_PATH.CALENDAR, // Replace with actual path
+                    permission: hasPermission([PERMISSIONS.CALENDAR_READ]),
                 },
                 {
-                    title: 'Users',
+                    title: 'Vacations',
+                    icon: AirplanemodeActiveIcon,
+                    href: ADMIN_PATH.VACATIONS, // Replace with actual path
+                    permission: hasPermission([PERMISSIONS.VACATIONS_READ]),
+                },
+                {
+                    title: 'Employees',
                     icon: GroupIcon,
-                    // href: `${ADMIN_PATH.USERS}?tab=${defaultUserTab}`,
-                    // permission: hasPermission([PERMISSIONS.APP_USER_READ, PERMISSIONS.PORTAL_USER_READ]),
+                    href: ADMIN_PATH.EMPLOYEES, // Replace with actual path
+                    permission: hasPermission([PERMISSIONS.EMPLOYEES_READ]),
                 },
                 {
-                    title: 'User Associations',
-                    icon: PersonIcon,
-                    // href: `${ADMIN_PATH.USER_ASSOCIATION}?tab=${defaultUserTab}`,
-                    // permission: hasPermission([PERMISSIONS.APP_USER_READ, PERMISSIONS.PORTAL_USER_READ]),
+                    title: 'Messenger',
+                    icon: ForumIcon,
+                    href: ADMIN_PATH.MESSENGER, // Replace with actual path
+                    permission: hasPermission([PERMISSIONS.MESSENGER_READ]),
                 },
                 {
-                    title: 'Peer Support',
-                    icon: VolunteerActivismIcon,
-                    // href: ADMIN_PATH.PEER_SUPPORT,
-                    // permission: hasPermission([PERMISSIONS.PEER_SUPPORT_PAGE_READ]),
+                    title: 'Info Portal',
+                    icon: LanguageIcon,
+                    href: ADMIN_PATH.INFO_PORTAL, // Replace with actual path
+                    permission: hasPermission([PERMISSIONS.INFO_PORTAL_READ]),
                 },
-                {
-                    title: 'Devices',
-                    icon: DevicesIcon,
-                    // href: ADMIN_PATH.DEVICES,
-                    // permission: hasPermission([PERMISSIONS.DEVICE_READ]),
-                },
-                {
-                    title: 'Consents',
-                    icon: FileCopyIcon,
-                    // href: ADMIN_PATH.CONSENTS,
-                    // permission: hasPermission([PERMISSIONS.RESOURCE_CONSENT_READ]),
-                },
-                {
-                    title: 'EULAs',
-                    icon: FactCheckIcon,
-                    // href: ADMIN_PATH.EULA,
-                    // permission: hasPermission([PERMISSIONS.RESOURCE_EULA_READ]),
-                },
-                {
-                    title: 'Clinical Portal',
-                    icon: AssignmentIndIcon,
-                    // href: ADMIN_PATH.CLINICAL_PORTAL,
-                    permission: true,
-                },
-                {
-                    title: 'Documents',
-                    icon: PictureAsPdfIcon,
-                    // href: ADMIN_PATH.DOCUMENTS,
-                    // permission: hasPermission([PERMISSIONS.RESOURCE_DOCUMENT_READ]),
-                },
-                {
-                    title: 'Notifications',
-                    icon: NotificationsIcon,
-                    // href: ADMIN_PATH.NOTIFICATIONS,
-                    // permission: hasPermission([PERMISSIONS.SURVEY_READ]),
-                },
+
             ],
         },
     ];
 
     const handleDrawer = () => {
         setOpen(!open);
-        // localStorage.setItem('isOpenDrawer', `${!open}`);
+        localStorage.setItem('isOpenDrawer', `${!open}`);
     };
-    // useEffect(() => {
-    //   if (openMobile && onMobileClose) {
-    //     onMobileClose();
-    //   }
-    // }, []);
-    //
-    // useLayoutEffect(() => {
-    //   const isOpenDrawer = localStorage.getItem('isOpenDrawer');
-    //   const parsedValue = isOpenDrawer && JSON.parse(isOpenDrawer);
-    //   setOpen(parsedValue ?? true);
-    // }, []);
+    useEffect(() => {
+      if (openMobile && onMobileClose) {
+        onMobileClose();
+      }
+    }, []);
+
+    useLayoutEffect(() => {
+      const isOpenDrawer = localStorage.getItem('isOpenDrawer');
+      const parsedValue = isOpenDrawer && JSON.parse(isOpenDrawer);
+      setOpen(parsedValue ?? true);
+    }, []);
 
     const content = (
         <Box
@@ -145,23 +191,12 @@ const NavBar = (props: NavBarProps) => {
             flexDirection="column"
             // style={{ marginTop: open ? 'auto' : '128px' }}
         >
-            <div style={{paddingRight:open?20:0}} className={styles.profile_content}>
+            <div className={styles.logo}>
+                <img src={Logo} alt="logo"/>
+            </div>
+            <div style={{paddingRight: open ? 20 : 0}} className={styles.profile_content}>
                 {/*<div className={styles.scroll}>*/}
 
-
-                <Box p={2} className={styles.nav_profile} style={{backgroundColor:open ? `rgba(125, 133, 146, 0.23)` : undefined}}>
-                    {
-                        open ? <div>
-                                <h6>superadminuser</h6>
-                                <p>superadminuser@gmail...</p>
-                            </div>
-                            : null
-                    }
-                    <IconButton onClick={handleLogout}>
-                        <LogoutIcon style={{color: '#000'}}/>
-                    </IconButton>
-                    {/*<span>Logout</span>*/}
-                </Box>
 
                 {<Divider className={styles.divider} style={{backgroundColor: open ? 'auto' : 'transparent'}}/>}
                 <Box className={styles.listWrap}>
@@ -174,12 +209,27 @@ const NavBar = (props: NavBarProps) => {
                                 </ListSubheader>
                             }
                         >
-                            {/*{renderNavItems({*/}
-                            {/*  items: section.items,*/}
-                            {/*  isOpenNavBar: open,*/}
-                            {/*})}*/}
+                            {renderNavItems({
+                                items: section.items,
+                                isOpenNavBar: open,
+                                location
+                            })}
                         </List>
                     ))}
+                    <Box p={2} className={styles.nav_profile}
+                         style={{backgroundColor: open ? `rgba(125, 133, 146, 0.23)` : undefined}}>
+                        {
+                            open ? <div>
+                                    <h6>superadminuser</h6>
+                                    <p>superadminuser@gmail...</p>
+                                </div>
+                                : null
+                        }
+                        <IconButton onClick={handleLogout}>
+                            <LogoutIcon style={{color: '#000'}}/>
+                        </IconButton>
+
+                    </Box>
                 </Box>
 
                 {/*</div>*/}
