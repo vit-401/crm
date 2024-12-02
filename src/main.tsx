@@ -13,6 +13,10 @@ import NotFoundPage from "./pages/404";
 
 const router = createBrowserRouter([
     {
+        path: "/",
+        element: <Navigate to={ADMIN_PATH.DASHBOARD} replace />,
+    },
+    {
         path: ADMIN_PATH.DASHBOARD,
         element: <Dashboard/>,
     },
