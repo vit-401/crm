@@ -12,8 +12,8 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import ViewAgendaIcon from '@mui/icons-material/ViewAgenda';
-import {useNavigate} from "react-router-dom";
-import {ADMIN_PATH} from "../../utils/paths";
+import {Link, useNavigate} from "react-router-dom";
+import {ADMIN_PATH, SIGN_UP} from "../../utils/paths";
 
 const SignInPage: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -104,13 +104,12 @@ const SignInPage: React.FC = () => {
                 }}
             >
                 <Typography variant="h5" fontWeight={600} mb={4}>
-                    Sign In to Wookroom
+                    Sign In to CRM
                 </Typography>
                 <Box component="form" sx={{ width: '100%', maxWidth: '400px' }} onSubmit={handleSignIn}>
                     <TextField
                         fullWidth
                         label="Username"
-                        placeholder="Neo"
                         type="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -177,17 +176,18 @@ const SignInPage: React.FC = () => {
                         Sign In
                     </Button>
                     <Typography textAlign="center" variant="body2">
-                        Don’t have an account?{' '}
-                        <Typography
-                            component="span"
-                            sx={{
-                                color: '#4F84FF',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
+                        Don’t have an account?{" "}
+                        <Link
+                            to={SIGN_UP}
+                            style={{
+                                color: "#4F84FF",
+                                fontWeight: "bold",
+                                textDecoration: "none",
+                                cursor: "pointer",
                             }}
                         >
                             Sign Up
-                        </Typography>
+                        </Link>
                     </Typography>
                 </Box>
             </Grid>

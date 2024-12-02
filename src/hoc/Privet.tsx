@@ -1,9 +1,9 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ADMIN_LOGIN, ADMIN_PATH } from "../utils/paths";
-import { useEffect } from "react";
+import {useLocation, useNavigate} from 'react-router-dom';
+import { ADMIN_PATH, SIGN_IN} from "../utils/paths";
+import {useEffect} from "react";
 
 const Private = (WrappedComponent: any, permissions?: string[]) => {
-    const FuncComponent = ({ children, ...props }: any) => {
+    const FuncComponent = ({children, ...props}: any) => {
         const navigate = useNavigate();
         const location = useLocation();
 
@@ -12,13 +12,12 @@ const Private = (WrappedComponent: any, permissions?: string[]) => {
 
         useEffect(() => {
 
-
             if (username !== 'adminn' || password !== 'qwqw') {
-                navigate(ADMIN_LOGIN);
+                navigate(SIGN_IN);
                 return;
             }
 
-            if (location.pathname === ADMIN_LOGIN) {
+            if (location.pathname === SIGN_IN) {
                 navigate(ADMIN_PATH.DASHBOARD);
             }
         }, [navigate, location.pathname, username, password]); // Add navigate and location.pathname to the dependency array

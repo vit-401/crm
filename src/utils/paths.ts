@@ -8,12 +8,14 @@ export const TERMS_AND_CONDITIONS = "terms-of-use";
 
 //Errors
 export const NOT_PERMISSIONS = '/403';
+export const NOT_FOUND = '/404';
+
 
 //Account
 export const ACCOUNT = '/account';
 
 //ADMIN
-export const ADMIN_MAIN = '/admin';
+export const ADMIN_MAIN = '';
 export const ADMIN_LOGIN = ADMIN_MAIN + '/sign-in';
 export const ADMIN_PATH = {
     RESET_PASSWORD: ADMIN_MAIN + '/password/reset',

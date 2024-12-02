@@ -1,5 +1,5 @@
-import {createBrowserRouter} from 'react-router-dom';
-import {ADMIN_LOGIN, ADMIN_PATH} from "./utils/paths";
+import {createBrowserRouter, Navigate} from 'react-router-dom';
+import {ADMIN_PATH, NOT_FOUND, SIGN_IN, SIGN_UP} from "./utils/paths";
 import Dashboard from "./pages/dashboard";
 import Projects from "./pages/projects";
 import Calendar from "./pages/calendar";
@@ -8,6 +8,8 @@ import Employees from "./pages/employees";
 import Messenger from "./pages/messenger";
 import InfoPortal from "./pages/info-portal";
 import SignIn from "./pages/sign-in";
+import SignUp from "./pages/sign-up";
+import NotFoundPage from "./pages/404";
 
 const router = createBrowserRouter([
     {
@@ -39,8 +41,20 @@ const router = createBrowserRouter([
         element: <InfoPortal/>,
     },
     {
-        path: ADMIN_LOGIN,
+        path: SIGN_IN,
         element: <SignIn/>,
+    },
+    {
+        path: SIGN_UP,
+        element: <SignUp/>,
+    },
+    {
+        path: NOT_FOUND,
+        element: <NotFoundPage/>,
+    },
+    {
+        path: "*",
+        element: <Navigate to="/404" replace />,
     },
 ]);
 

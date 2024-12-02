@@ -20,13 +20,10 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import {DrawerHeader, DrawerSideBar} from './components/DrawerSideBar';
 import NavItem from "./navItem";
-import {ADMIN_LOGIN, ADMIN_PATH} from "../../utils/paths";
+import { ADMIN_PATH, SIGN_IN} from "../../utils/paths";
 import {PERMISSIONS} from "../../utils/permitions";
 import {usePermissions} from "../../hooks/access/usePermissions";
 import LanguageIcon from '@mui/icons-material/Language';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import PublicIcon from '@mui/icons-material/Public';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 interface NavBarProps {
     onMobileClose: () => void;
@@ -116,7 +113,7 @@ const NavBar = (props: NavBarProps) => {
         localStorage.removeItem('username');
         localStorage.removeItem('password');
 
-        navigate(ADMIN_LOGIN)
+        navigate(SIGN_IN)
     };
     const location = useLocation(); // Use the hook here
     const {hasPermission} = usePermissions()
