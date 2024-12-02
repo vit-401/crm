@@ -10,6 +10,7 @@ import InfoPortal from "./pages/info-portal";
 import SignIn from "./pages/sign-in";
 import SignUp from "./pages/sign-up";
 import NotFoundPage from "./pages/404";
+import NearestEvents from "./pages/nearest-events";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
         element: <InfoPortal/>,
     },
     {
+        path: ADMIN_PATH.NEAREST_EVENT,
+        element: <NearestEvents/>,
+    },
+    {
         path: SIGN_IN,
         element: <SignIn/>,
     },
@@ -56,6 +61,7 @@ const router = createBrowserRouter([
         path: NOT_FOUND,
         element: <NotFoundPage/>,
     },
+
     {
         path: "*",
         element: <Navigate to="/404" replace />,

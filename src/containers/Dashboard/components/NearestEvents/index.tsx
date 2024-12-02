@@ -1,6 +1,8 @@
 import React from 'react';
-import { Box, Typography, Divider, List, ListItem, ListItemText, ListItemIcon, Chip } from '@mui/material';
+import {Box, Typography, Divider, List, ListItem, ListItemText, ListItemIcon, Chip, Button} from '@mui/material';
 import { AccessTime, ArrowUpward, ArrowDownward } from '@mui/icons-material';
+import {Link} from "react-router-dom";
+import {ADMIN_PATH} from "../../../../utils/paths";
 
 type Event = {
     title: string;
@@ -56,9 +58,18 @@ const NearestEvents: React.FC = () => {
                 <Typography variant="h6" fontWeight="bold">
                     Nearest Events
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#1976d2', cursor: 'pointer' }}>
+
+                <Link
+                    to={ADMIN_PATH.NEAREST_EVENT} // Replace with the appropriate route
+                    style={{
+                        textTransform: "none",
+                        color: "#1976d2",
+                        textDecoration: "none",
+                        fontSize: "inherit",
+                    }}
+                >
                     View all &gt;
-                </Typography>
+                </Link>
             </Box>
 
 

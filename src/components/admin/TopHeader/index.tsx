@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {AppBar, Toolbar, IconButton, InputBase, Avatar, Button, Box, Typography} from '@mui/material';
 import {Search as SearchIcon, Notifications as NotificationsIcon} from '@mui/icons-material';
-import avatar from "../../../../images/230f9ce9971353cecc3c52241dd67e57.png"
+import avatar from "../../../images/230f9ce9971353cecc3c52241dd67e57.png"
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import {useLocation} from "react-router-dom";
+import {ADMIN_PATH} from "../../../utils/paths";
 
-const TopHeader = () => {
+interface TopHeaderProps{
+    title:string
+}
+
+const TopHeader:FC<TopHeaderProps> = (props) => {
+    const location = useLocation()
     return (
         <div>
-            <Toolbar sx={{display: 'flex', justifyContent: 'space-between', padding: '0 16px'}}>
+            <Toolbar sx={{display: 'flex', justifyContent: 'space-between', padding: '0 '}}>
                 <Box display="flex" alignItems="center" gap={2}>
                     {/* Search Bar */}
                     <Box
@@ -70,22 +77,30 @@ const TopHeader = () => {
 
 
             </Toolbar>
-            <Toolbar sx={{display: 'flex', justifyContent: 'space-between', alignItems:'end', padding: '0 16px', marginTop:'20px'}}>
+            <Toolbar sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'end',
+                padding: '0 16px',
+                marginTop: '20px'
+            }}>
 
 
                 {/* Left Side: Welcome Message and Title */}
-                <Box >
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            color: '#757575',
-                            fontWeight: 400,
-                            fontSize: '14px',
-                            lineHeight: '20px',
-                        }}
-                    >
-                        Welcome back, Evan!
-                    </Typography>
+                <Box>
+                    {
+                        location.pathname === ADMIN_PATH.DASHBOARD && <Typography
+                            variant="body2"
+                            sx={{
+                                color: '#757575',
+                                fontWeight: 400,
+                                fontSize: '14px',
+                                lineHeight: '20px',
+                            }}
+                        >
+                            Welcome back, Evan!
+                        </Typography>
+                    }
 
                     <Box display="flex" alignItems="center" gap={1}>
                         <Typography
@@ -97,7 +112,8 @@ const TopHeader = () => {
                                 fontFamily: 'Nunito Sans, sans-serif',
                             }}
                         >
-                            Dashboard
+                            {props.title}
+
                         </Typography>
                     </Box>
                 </Box>
@@ -117,7 +133,7 @@ const TopHeader = () => {
                             lineHeight: '20px',
                             textTransform: 'none',
                             borderRadius: '8px',
-                            boxShadow:'none',
+                            boxShadow: 'none',
                             padding: '8px 16px',
                             '&:hover': {
                                 backgroundColor: '#e6effb',

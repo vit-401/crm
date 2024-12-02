@@ -19,7 +19,7 @@ export const ADMIN_MAIN = '';
 export const ADMIN_LOGIN = ADMIN_MAIN + '/sign-in';
 export const ADMIN_PATH = {
     RESET_PASSWORD: ADMIN_MAIN + '/password/reset',
-
+    NEAREST_EVENT: ADMIN_MAIN + '/nearest-event',
     DASHBOARD: ADMIN_MAIN + '/dashboard',
     PROJECTS: ADMIN_MAIN + '/projects',
     CALENDAR: ADMIN_MAIN + '/calendar',

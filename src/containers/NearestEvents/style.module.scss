@@ -1,0 +1,13 @@
+.wrapper {
+  padding: 24px;
+}
+.cardLineDecor{
+    content: '';
+    position: absolute;
+    border-radius: 15px;
+    top: 24px;
+    left: 24px;
+    width: 4px;
+    height: calc(100% - 48px);
+    background-color: #fff;
+}
