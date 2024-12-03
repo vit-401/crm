@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     Box,
     Typography,
@@ -18,6 +18,7 @@ import {ADMIN_PATH} from "../../utils/paths";
 import TopHeader from "../../components/admin/TopHeader";
 import style from "./style.module.scss";
 import classes from "*.module.css";
+import AddEventDialog from "./components/AddEventDialog";
 
 interface Event {
     title: string;
@@ -34,7 +35,7 @@ const events: Event[] = [
         title: "Presentation of the new department",
         time: "6:00 PM",
         duration: "4h",
-        color:"#3F8CFF",
+        color: "#3F8CFF",
         icon: WorkIcon,
         priority: "up",
         date: "Today",
@@ -46,7 +47,7 @@ const events: Event[] = [
         icon: CakeIcon,
         priority: "down",
         date: "Today",
-        color:"#DE92EB"
+        color: "#DE92EB"
     },
     {
         title: "Meeting with Development Team",
@@ -55,16 +56,16 @@ const events: Event[] = [
         icon: EventIcon,
         priority: "up",
         date: "Tomorrow",
-        color:"#FDC748"
+        color: "#FDC748"
     },
     {
         title: "Ray’s Birthday",
         time: "2:00 PM",
         duration: "1h 30m",
-        icon: CakeIcon ,
+        icon: CakeIcon,
         priority: "down",
         date: "Tomorrow",
-        color:"#DE92EB"
+        color: "#DE92EB"
     },
     {
         title: "Meeting with CEO",
@@ -73,38 +74,43 @@ const events: Event[] = [
         icon: WorkIcon,
         priority: "up",
         date: "Sep 14",
-        color:"#3F8CFF"
+        color: "#3F8CFF"
     },
     {
         title: "Movie night (Tenet)",
         time: "5:00 PM",
         duration: "3h",
-        icon: EventIcon ,
+        icon: EventIcon,
         priority: "down",
         date: "Sep 15",
-        color:"#6D5DD3"
+        color: "#6D5DD3"
     },
     {
         title: "Lucas’s Birthday",
         time: "5:30 PM",
         duration: "2h",
-        icon: CakeIcon ,
+        icon: CakeIcon,
         priority: "down",
         date: "Sep 29",
-        color:"#DE92EB"
+        color: "#DE92EB"
     },
     {
         title: "Meeting with CTO",
         time: "12:00 PM",
         duration: "1h",
-        icon: WorkIcon ,
+        icon: WorkIcon,
         priority: "up",
         date: "Sep 30",
-        color:"#3F8CFF"
+        color: "#3F8CFF"
     },
 ];
 
 const NearestEvents: React.FC = () => {
+    const [open, setOpen] = useState(false);
+
+    // Handle open/close
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     return (
         <>
             <TopHeader title={"Nearest Events"}/>
@@ -136,16 +142,7 @@ const NearestEvents: React.FC = () => {
                         }}
                     >
 
-                        <Button
-                            variant="contained"
-                            sx={{
-
-                                backgroundColor: "#2979ff",
-                                color: "#fff",
-                                textTransform: "none",
-                                "&:hover": {backgroundColor: "#255cb3"},
-                            }}
-                        >
+                        <Button onClick={handleOpen} variant="button-popup">
                             + Add Event
                         </Button>
                     </Box>
@@ -173,7 +170,7 @@ const NearestEvents: React.FC = () => {
                                     <Box
                                         className={style.cardInfo}
                                         sx={{
-                                            marginLeft:'46px',
+                                            marginLeft: '46px',
                                             display: "flex",
                                             gap: 2
                                         }}>
@@ -200,7 +197,7 @@ const NearestEvents: React.FC = () => {
                                             </Typography>
                                             <Typography
                                                 sx={{
-                                                    marginTop:'25px'
+                                                    marginTop: '25px'
                                                 }}
                                                 variant="body2"
                                                 color="textSecondary"
@@ -212,7 +209,6 @@ const NearestEvents: React.FC = () => {
                                     <Box sx={{
                                         textAlign: "right",
                                     }}>
-
 
 
                                         {event.priority === "up" ? (
@@ -240,7 +236,9 @@ const NearestEvents: React.FC = () => {
                                 </Card>
                             </Grid>
                         ))}
+
                     </Grid>
+                    <AddEventDialog open={open} onClose={handleClose}/>
                 </Box>
             </div>
         </>

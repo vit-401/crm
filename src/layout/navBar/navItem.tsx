@@ -65,8 +65,8 @@ const NavItem = (props: NavItemProps) => {
                 {/*eslint-disable-next-line*/}
                 <a className={`${styles.buttonLeaf} depth-${depth} ${open ? styles.buttonLeafActive : ''}`}>
                     <Button>
-                        {Icon && <Icon className={styles.icon} style={{color: open ? '#3F8CFF' : undefined}} size="20"/>}
-                        {isOpenNavBar ? <span style={{color: open ? '#3F8CFF' : undefined}} className={styles.title}> {title}</span> : null}
+                        {Icon && <Icon className={styles.icon} style={{color: open ? '#3F8CFF' : "#7D8592"}} size="20"/>}
+                        {isOpenNavBar ? <span style={{color: open ? '#3F8CFF' : "#7D8592"}} className={styles.title}> {title}</span> : null}
                         {Info && <Info/>}
                     </Button>
                 </a>

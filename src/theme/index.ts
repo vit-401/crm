@@ -1,4 +1,5 @@
 import {createTheme} from '@mui/material/styles';
+import { ButtonProps } from "@mui/material";
 
 
 declare module '@mui/material/styles' {
@@ -21,8 +22,46 @@ declare module '@mui/material/Typography' {
     }
 }
 
+declare module "@mui/material/Button" {
+    interface ButtonPropsVariantOverrides {
+        "button-popup": true; // Add your custom variant here
+    }
+}
+
+
 
 const theme = createTheme({
+    components: {
+
+        MuiButton: {
+            variants: [
+                {
+                    props: {variant: "button-popup"},
+                    style: {
+                        backgroundColor: '#3F8CFF', // Default background
+                        color: '#FFFFFF',          // Default text color
+                        fontFamily: "Nunito Sans, Arial, sans-serif", // Primary font
+                        fontSize: 16, // Base font size
+                        fontWeight: 600,
+                        borderRadius: '14px',
+                        textTransform: 'none', // Disable uppercase by default
+                        boxShadow: "0px 6px 12px 0px rgba(63, 140, 255, 0.42)",
+                        padding: "10px 22px",
+                        '&:hover': {
+                            backgroundColor: '#3A81EB', // Hover state
+                        },
+                        '&:active': {
+                            backgroundColor: '#1F6DE0', // Pressed state
+                        },
+                        '&.Mui-disabled': {
+                            backgroundColor: '#CED5E0', // Disabled state
+                            color: '#9E9E9E',          // Disabled text color
+                        },
+                    }
+                }
+            ],
+        },
+    },
     typography: {
         h6: {
             color: '#0A1629',
@@ -49,7 +88,7 @@ const theme = createTheme({
     palette: {
         primary: {
             light: '#757ce8',
-            main: '#7D8592',
+            main: 'rgba(63, 140, 255, 1)',
             dark: '#002884',
             contrastText: '#fff',
         },
