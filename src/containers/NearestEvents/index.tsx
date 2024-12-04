@@ -125,7 +125,7 @@ const NearestEvents: React.FC = () => {
                         sx={{
                             display: "inline-block",
                             textDecoration: "none",
-                            marginBottom: 2,
+                            margin: "20px 20px 0 20px",
                             textTransform: 'none', color: '#1976d2'
                         }}
                     >

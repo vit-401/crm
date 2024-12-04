@@ -1,7 +1,7 @@
 .wrapper {
   display: grid;
   gap: 24px;
-  padding: 24px;
+  //padding: 24px;
 
   @media (min-width: 768px) {
     grid-template-columns: 2fr 1fr;

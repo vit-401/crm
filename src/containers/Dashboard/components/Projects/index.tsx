@@ -75,14 +75,14 @@ const Projects: React.FC = () => {
     return (
         <Box
             sx={{
-                padding: 3,
+                // padding: 3,
                 backgroundColor: '#F4F9FD',
                 borderRadius: 2,
 
             }}
         >
             {/* Header */}
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+            <Box display="flex" justifyContent="space-between" alignItems="center"padding={"0 20px"} mb={3}>
                 <Typography variant="h6" fontWeight="bold">
                     Projects
                 </Typography>
