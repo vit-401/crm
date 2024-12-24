@@ -115,7 +115,7 @@ const DynamicTable: React.FC = () => {
             row.date,
             row.startTime,
             row.endTime,
-            calculateTotalTime(row.startTime, row.endTime),
+            calculateTotalTime(row.startTime, row.endTime).toFixed(2),
         ]);
 
         autoTable(doc, {
