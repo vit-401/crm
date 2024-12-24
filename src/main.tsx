@@ -11,6 +11,8 @@ import SignIn from "./pages/sign-in";
 import SignUp from "./pages/sign-up";
 import NotFoundPage from "./pages/404";
 import NearestEvents from "./pages/nearest-events";
+import ReportAppContent from "./containers/ReportTimeApp";
+import ReportTimeApp from "./pages/report-time-app";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +52,10 @@ const router = createBrowserRouter([
         element: <NearestEvents/>,
     },
     {
+        path:ADMIN_PATH.REPORT_TIME_APP,
+        element:<ReportTimeApp/>
+    },
+    {
         path: SIGN_IN,
         element: <SignIn/>,
     },
@@ -61,6 +67,7 @@ const router = createBrowserRouter([
         path: NOT_FOUND,
         element: <NotFoundPage/>,
     },
+
 
     {
         path: "*",

@@ -22,6 +22,7 @@ export const ADMIN_PATH = {
     NEAREST_EVENT: ADMIN_MAIN + '/nearest-event',
     DASHBOARD: ADMIN_MAIN + '/dashboard',
     PROJECTS: ADMIN_MAIN + '/projects',
+    REPORT_TIME_APP: ADMIN_MAIN + '/report-time-app',
     CALENDAR: ADMIN_MAIN + '/calendar',
     VACATIONS: ADMIN_MAIN + '/vacations',
     EMPLOYEES: ADMIN_MAIN + '/employees',

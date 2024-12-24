@@ -24,6 +24,7 @@ import { ADMIN_PATH, SIGN_IN} from "../../utils/paths";
 import {PERMISSIONS} from "../../utils/permitions";
 import {usePermissions} from "../../hooks/access/usePermissions";
 import LanguageIcon from '@mui/icons-material/Language';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 interface NavBarProps {
     onMobileClose: () => void;
@@ -163,6 +164,12 @@ const NavBar = (props: NavBarProps) => {
                     icon: LanguageIcon,
                     href: ADMIN_PATH.INFO_PORTAL, // Replace with actual path
                     permission: hasPermission([PERMISSIONS.INFO_PORTAL_READ]),
+                },
+                {
+                    title: 'Report time app',
+                    icon: AccessTimeIcon,
+                    href: ADMIN_PATH.REPORT_TIME_APP, // Replace with actual path
+                    permission: hasPermission([PERMISSIONS.DASHBOARD_READ]),
                 },
 
             ],
