@@ -1,10 +1,21 @@
 import React, {useState} from "react";
-import {Button, TextField, Table, TableHead, TableRow, TableCell, TableBody} from "@mui/material";
+import {
+    Button,
+    TextField,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
+    Grid,
+    IconButton, TableContainer, Paper,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import IconButton from "@mui/material/IconButton";
+import {DatePicker} from "@mui/x-date-pickers";
+
 type Row = {
     date: string;
     startTime: string;
@@ -13,10 +24,10 @@ type Row = {
 
 const DynamicTable: React.FC = () => {
     const [rows, setRows] = useState<Row[]>([
-        { date: getFormattedDate(new Date()), startTime: "07:00", endTime: "15:00" },
+        {date: getFormattedDate(new Date()), startTime: "07:00", endTime: "15:00"},
     ]);
     const [defaultStartTime, setDefaultStartTime] = useState<string>("07:00");
-    const [rate, setRate] = useState<number>(20); // Hourly rate
+    const [rate, setRate] = useState<number>(22);
     const [firstName, setFirstName] = useState<string>("Vitalii");
     const [lastName, setLastName] = useState<string>("Prysizhniuk");
 
@@ -38,7 +49,7 @@ const DynamicTable: React.FC = () => {
         nextDate.setDate(lastDate.getDate() + 2);
         setRows([
             ...rows,
-            { date: getFormattedDate(nextDate), startTime: defaultStartTime, endTime: "15:00" },
+            {date: getFormattedDate(nextDate), startTime: defaultStartTime, endTime: "15:00"},
         ]);
     };
 
@@ -78,9 +89,8 @@ const DynamicTable: React.FC = () => {
         const totalHours = calculateTotalHours();
         return totalHours * rate;
     };
+
     const generatePDF = () => {
-
-
         if (!firstName || !lastName) {
             alert("Please fill in both First Name and Last Name fields.");
             return;
@@ -94,23 +104,19 @@ const DynamicTable: React.FC = () => {
 
         const doc = new jsPDF();
 
-        // Sort rows by date (ascending order)
         const sortedRows = [...rows].sort((a, b) => {
             const dateA = new Date(a.date.split("/").reverse().join("-"));
             const dateB = new Date(b.date.split("/").reverse().join("-"));
             return dateA.getTime() - dateB.getTime();
         });
 
-        // Determine report title with date range
         const startDate = sortedRows[0]?.date || "";
         const endDate = sortedRows[sortedRows.length - 1]?.date || "";
         const title = `Time Report ${startDate} - ${endDate}`;
 
-        // Add title and name
-        doc.text(title, 14, 10); // Title at the top
-        doc.text(`Name: ${firstName} ${lastName}`, 14, 20); // Name below the title
+        doc.text(title, 14, 10);
+        doc.text(`Name: ${firstName} ${lastName}`, 14, 20);
 
-        // Add the table
         const tableData = sortedRows.map((row) => [
             row.date,
             row.startTime,
@@ -121,108 +127,133 @@ const DynamicTable: React.FC = () => {
         autoTable(doc, {
             head: [["Date", "Start Time", "End Time", "Total Time Worked"]],
             body: tableData,
-            startY: 30, // Ensure the table starts below the name
+            startY: 30,
         });
 
         doc.save(`time-report ${getFormattedDate(new Date())} ${lastName}.pdf`);
     };
+
     return (
-        <div style={{ padding: "1rem" }}>
-            <div style={{ marginBottom: "1rem" }}>
+        <Grid container spacing={2} padding={2}>
+            <Grid item xs={12} sm={6} md={4}>
                 <TextField
+                    fullWidth
                     label="First Name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    style={{ marginRight: "1rem" }}
                 />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
                 <TextField
+                    fullWidth
                     label="Last Name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                 />
-            </div>
-            <div style={{ marginBottom: "1rem" }}>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
                 <TextField
+                    fullWidth
                     label="Default Start Time"
                     type="time"
                     value={defaultStartTime}
                     onChange={(e) => setDefaultStartTime(e.target.value)}
-                    InputLabelProps={{ shrink: true }}
-                    style={{ marginRight: "1rem" }}
                 />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
                 <TextField
+                    fullWidth
                     label="Hourly Rate ($/h)"
                     type="number"
                     value={rate}
                     onChange={(e) => setRate(parseFloat(e.target.value))}
                 />
-            </div>
-            <Table style={{ marginBottom: "1rem" }}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Date</TableCell>
-                        <TableCell>Start Time</TableCell>
-                        <TableCell>End Time</TableCell>
-                        <TableCell>Total Time Worked (h)</TableCell>
-                        <TableCell>Actions</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row, index) => (
-                        <TableRow key={index}>
-                            <TableCell>
-                                <TextField
-                                    type="text"
-                                    value={row.date}
-                                    onChange={(e) => handleChange(index, "date", e.target.value)}
-                                />
-                            </TableCell>
-                            <TableCell>
-                                <TextField
-                                    type="time"
-                                    value={row.startTime || defaultStartTime}
-                                    onChange={(e) => handleChange(index, "startTime", e.target.value)}
-                                />
-                            </TableCell>
-                            <TableCell>
-                                <TextField
-                                    type="time"
-                                    value={row.endTime}
-                                    onChange={(e) => handleChange(index, "endTime", e.target.value)}
-                                />
-                            </TableCell>
-                            <TableCell>
-                                {calculateTotalTime(row.startTime, row.endTime).toFixed(2)}
-                            </TableCell>
-                            <TableCell>
-                                <IconButton onClick={() => removeRow(index)} color="error">
-                                    <DeleteIcon />
-                                </IconButton>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddIcon />}
-                onClick={addRow}
-                style={{ marginRight: "1rem" }}
-            >
-                Add Row
-            </Button>
-            <Button
-                variant="outlined"
-                onClick={generatePDF}
-            >
-                Generate PDF Report
-            </Button>
-            <div style={{ marginTop: "1rem" }}>
+            </Grid>
+
+            <Grid item xs={12}>
+                <TableContainer component={Paper}>
+
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Date</TableCell>
+                                <TableCell>Start Time</TableCell>
+                                <TableCell>End Time</TableCell>
+                                <TableCell>Total Time Worked (h)</TableCell>
+                                <TableCell>Actions</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row, index) => (
+                                <TableRow key={index}>
+                                    <TableCell sx={{minWidth: "153px"}}>
+
+                                        <TextField
+                                            fullWidth
+                                            type="text"
+                                            value={row.date}
+                                            onChange={(e) => handleChange(index, "date", e.target.value)}
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        <TextField
+                                            fullWidth
+                                            type="time"
+                                            value={row.startTime || defaultStartTime}
+                                            onChange={(e) => handleChange(index, "startTime", e.target.value)}
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        <TextField
+                                            fullWidth
+                                            type="time"
+                                            value={row.endTime}
+                                            onChange={(e) => handleChange(index, "endTime", e.target.value)}
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        {calculateTotalTime(row.startTime, row.endTime).toFixed(2)}
+                                    </TableCell>
+                                    <TableCell>
+                                        <IconButton onClick={() => removeRow(index)} color="error">
+                                            <DeleteIcon/>
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Grid>
+
+            <Grid item container gap={"20px"}>
+                <Grid item  sm={6} md={4}>
+
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        startIcon={<AddIcon/>}
+                        onClick={addRow}
+                        style={{marginRight: "1rem"}}
+                    >
+                        Add Row
+                    </Button>
+                </Grid>
+                <Grid  sm={6} md={4}>
+
+                    <Button fullWidth variant="outlined" onClick={generatePDF}>
+                        Generate PDF Report
+                    </Button>
+                </Grid>
+
+            </Grid>
+
+            <Grid item xs={12}>
                 <p>Total Time Worked: {calculateTotalHours().toFixed(2)} hours</p>
                 <p>Total Payment: ${calculateTotalPayment().toFixed(2)}</p>
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     );
 };
 
